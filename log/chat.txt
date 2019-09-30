@@ -1,0 +1,2 @@
+2019-09-30 22:31:56.189441|sue|> Hello sue
+2019-09-30 22:31:56.189467|sue|> What do you want? (If you need to exit, type exit or quit)
