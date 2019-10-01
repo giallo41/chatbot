@@ -3,26 +3,108 @@ import pandas as pd
 from datetime import datetime
 import logging
 import logging.handlers
+import re
 
-
-FILE_NAME = './log/chat.txt'
 
 # Defined Keyword 
-
 txt_dic = {
     'exit' : ['quit', 'exit'],
-    'help' : ['help', '?']
+    'help' : ['help', '?'],
+    'search' : ['find', 'look', 'search', 'get', 'browser', 'which', 'what'],
+    'time' : ['when', 'time'],
+    'lo_start' : ['departure', 'from', 'start'],
+    'lo_end' : ['destination', 'toward', 'end']
+
 }
 
-data_dic = {
+feature_dic = {
     'class' : ['A', 'B', 'C', 'D', 'E'],
     'start' : ['Berlin', 'Frankfurt', 'Munich', 'Nuremberg', 'Zurich', 'Stuttgart'],
     'end' : ['Bern', 'Vien', 'Barcelona', 'Paris', 'Amsterdam', 'Milano', 'Prague'],
-    'time' : [],
-    'number' : []
+    'time' : ['am', 'pm', 'hour'],
+    'number' : [],
 }
 
+def process_text(list_text):
+    """
+    Process input text
+    Detect the key feature of list and store to dictionary
+
+    Parameters
+    ----------
+    list_text : list of string
+        list of input text
+    
+    Returns
+    -------
+    input_dic : Dictionary
+        Dictionary that takes the feature as key and
+        the corresponding information as a value
+    """
+    input_dic = {}
+    for key, _ in feature_dic.items():
+        input_dic[key] = None
+
+    # Action trigger
+    input_dic['action'] = False
+
+    if len(set(list_text).intersection(set(txt_dic['lo_start'])))>0:
+        for txt in list_text:
+            if txt.capitalize() in feature_dic['start']:
+                input_dic['start'] = txt.capitalize()
+                input_dic['action'] = True
+
+    return input_dic
+        
+def find_data(data, input_dic):
+    """
+    Find the data
+    return the list of searching result from the input_dic
+    WIP : add more feature searching
+
+    Parameters
+    ----------
+    data : pandas DataFrame
+        datasets
+    
+    input_dic : Dictionary
+        Dictionary that takes the feature as key and
+        the corresponding information as a value
+    
+    Returns
+    -------
+    search_list : list of string
+        list of trucks
+    """
+    search_list = None
+
+    data_select = data[(data['start']==input_dic['start'])]
+
+    if len(data_select) > 0:
+        search_list = []
+        for i in range(0, len(data_select)):
+            items = data_select.iloc[i].to_list()
+            txt_str = []
+            for key, item in zip(data_select.columns, items):
+                txt_str.append(key+':'+str(item))
+            search_list.append(' '.join(map(str, txt_str)))
+
+    return search_list
+
+
 class PrintText:
+    """Print text and write to file 
+
+    Parameters
+    ----------
+    input_name : string
+        user name
+    
+    filename : string, default = './log/chat.txt'
+        filename to save chat history
+
+    """
+    FILE_NAME = './log/chat.txt'
 
     def __init__(self, input_name, filename=FILE_NAME):
         self._input_name = input_name
@@ -41,10 +123,21 @@ class PrintText:
         self._f.write(file_text)
 
 
-def generating_data(num=50):
+def generating_data(num=10):
+    """generating random datasets
 
+    Parameters
+    ----------
+    num : integer, default = 10
+        Number of data that generated
+
+    Returns
+    -------
+    data : pandas DataFrame
+        generated datasets
+    """
     data = pd.DataFrame()
-    for key, values in data_dic.items():
+    for key, values in feature_dic.items():
       if key == 'time':
         data[key] = np.random.randint(0,24,num)
       elif key == 'number':
@@ -55,9 +148,6 @@ def generating_data(num=50):
         data[key] = np.random.choice(values, num)
     return data
 
-def save_log(filename):
-    pass
-
 def main():
     
     input_text = None
@@ -65,6 +155,7 @@ def main():
     now = datetime.now()
     timestamp = datetime.timestamp(now)
 
+    # Get data
     data = generating_data()
     print ("- this is chatbot -")
     print ("> What's your name?")
@@ -76,10 +167,27 @@ def main():
     while input_text not in txt_dic['exit']:
         input_text = input()
         if input_text not in txt_dic['exit']:
-            print ("Input text :", input_text)
+            # Processing input text
+            # split the text 
+            list_text = [x.lower() for x in input_text.split()]
+
+            # Searching DB trigger
+            if len(set(list_text).intersection(set(txt_dic['search'])))>0:
+                input_dic = process_text(list_text)
+            #    else:
+            #        pt.Print("> I don't understand")
+            
+            if input_dic['action']:
+                # Find the results
+                result = find_data(data, input_dic)
+                pt.Print("> Result....")
+                if result is None:
+                    pt.Print("> There is no data")
+                else:
+                    for rst in result:
+                        pt.Print("> "+str(rst))
         else:
             pt.Print('- Exit the chatting - ')
-
 
 if __name__=="__main__":
     main()  

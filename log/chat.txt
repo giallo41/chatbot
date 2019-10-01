@@ -1,2 +1,6 @@
-2019-09-30 22:31:56.189441|sue|> Hello sue
-2019-09-30 22:31:56.189467|sue|> What do you want? (If you need to exit, type exit or quit)
+2019-10-01 16:30:28.692105|sue|> Hello sue
+2019-10-01 16:30:28.692144|sue|> What do you want? (If you need to exit, type exit or quit)
+2019-10-01 16:30:33.121007|sue|> Result....
+2019-10-01 16:30:33.121041|sue|> class:A start:Berlin end:Vien time:13 number:7
+2019-10-01 16:30:33.121058|sue|> class:E start:Berlin end:Amsterdam time:19 number:1
+2019-10-01 16:30:44.741170|sue|- Exit the chatting - 
