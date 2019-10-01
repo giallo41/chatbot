@@ -1,6 +1,20 @@
-2019-10-01 16:30:28.692105|sue|> Hello sue
-2019-10-01 16:30:28.692144|sue|> What do you want? (If you need to exit, type exit or quit)
-2019-10-01 16:30:33.121007|sue|> Result....
-2019-10-01 16:30:33.121041|sue|> class:A start:Berlin end:Vien time:13 number:7
-2019-10-01 16:30:33.121058|sue|> class:E start:Berlin end:Amsterdam time:19 number:1
-2019-10-01 16:30:44.741170|sue|- Exit the chatting - 
+2019-10-01 20:20:11.503303|sue|> Hello sue
+2019-10-01 20:20:11.503342|sue|> What do you want? (If you need to exit, type exit or quit)
+2019-10-01 20:20:14.528356|sue|> Hmm
+2019-10-01 20:20:14.528397|sue|> What do you want? (If you need to exit, type exit or quit)
+2019-10-01 20:20:24.022649|sue|> Hmm
+2019-10-01 20:20:24.022698|sue|> What do you want? (If you need to exit, type exit or quit)
+2019-10-01 20:20:31.751715|sue|> What do you want? (If you need to exit, type exit or quit)
+2019-10-01 20:20:41.410094|sue|> What do you want? (If you need to exit, type exit or quit)
+2019-10-01 20:22:16.069674|sue|- Exit the chatting - 
+2019-10-01 20:22:20.868093|sue|> Hello sue
+2019-10-01 20:22:20.868126|sue|> What do you want? (If you need to exit, type exit or quit)
+2019-10-01 20:22:30.708260|sue|> Result....
+2019-10-01 20:22:30.708286|sue|> class:E start:Berlin end:Prague time:0 number:9
+2019-10-01 20:22:30.708298|sue|> class:E start:Berlin end:Vien time:17 number:4
+2019-10-01 20:22:30.708309|sue|> What do you want? (If you need to exit, type exit or quit)
+2019-10-01 20:22:32.552440|sue|> What do you want? (If you need to exit, type exit or quit)
+2019-10-01 20:22:45.313833|sue|> Result....
+2019-10-01 20:22:45.313876|sue|> There is no data
+2019-10-01 20:22:45.313898|sue|> What do you want? (If you need to exit, type exit or quit)
+2019-10-01 20:23:12.367866|sue|- Exit the chatting - 

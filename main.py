@@ -25,6 +25,8 @@ feature_dic = {
     'number' : [],
 }
 
+HELLO_TEXT = "> What do you want? (If you need to exit, type exit or quit)"
+
 def process_text(list_text):
     """
     Process input text
@@ -49,10 +51,11 @@ def process_text(list_text):
     input_dic['action'] = False
 
     if len(set(list_text).intersection(set(txt_dic['lo_start'])))>0:
+        input_dic['action'] = True
         for txt in list_text:
             if txt.capitalize() in feature_dic['start']:
                 input_dic['start'] = txt.capitalize()
-                input_dic['action'] = True
+                
 
     return input_dic
         
@@ -76,8 +79,6 @@ def find_data(data, input_dic):
     search_list : list of string
         list of trucks
     """
-    search_list = None
-
     data_select = data[(data['start']==input_dic['start'])]
 
     if len(data_select) > 0:
@@ -88,6 +89,8 @@ def find_data(data, input_dic):
             for key, item in zip(data_select.columns, items):
                 txt_str.append(key+':'+str(item))
             search_list.append(' '.join(map(str, txt_str)))
+    else:
+        search_list = None
 
     return search_list
 
@@ -162,9 +165,9 @@ def main():
     input_name = input()
     pt = PrintText(input_name)
     pt.Print("> Hello "+input_name)
-    pt.Print("> What do you want? (If you need to exit, type exit or quit)")
-
+    
     while input_text not in txt_dic['exit']:
+        pt.Print(HELLO_TEXT)
         input_text = input()
         if input_text not in txt_dic['exit']:
             # Processing input text
@@ -174,18 +177,18 @@ def main():
             # Searching DB trigger
             if len(set(list_text).intersection(set(txt_dic['search'])))>0:
                 input_dic = process_text(list_text)
-            #    else:
-            #        pt.Print("> I don't understand")
-            
-            if input_dic['action']:
-                # Find the results
-                result = find_data(data, input_dic)
-                pt.Print("> Result....")
-                if result is None:
-                    pt.Print("> There is no data")
-                else:
-                    for rst in result:
-                        pt.Print("> "+str(rst))
+                
+                if input_dic['action']:
+                    # Find the results
+                    result = find_data(data, input_dic)
+                    pt.Print("> Result....")
+                    if result is None:
+                        pt.Print("> There is no data")
+                    else:
+                        for rst in result:
+                            pt.Print("> "+str(rst))
+            else:
+                pt.Print("> Hmm")
         else:
             pt.Print('- Exit the chatting - ')
 
